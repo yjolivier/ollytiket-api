@@ -7,11 +7,19 @@ meta {
 get {
   url: {{OLLYTIKET_URL}}/tickets?eventId={{OLLYTIKET_EVENT_ID}}
   body: none
-  auth: inherit
+  auth: bearer
 }
 
 params:query {
   eventId: {{OLLYTIKET_EVENT_ID}}
+}
+
+auth:bearer {
+  token: {{LOGIN_TOKEN}}
+}
+
+vars:pre-request {
+  OLLYTIKET_EVENT_ID: 2d1a26d8-ae52-4327-840d-cbed6f9f3e08
 }
 
 docs {

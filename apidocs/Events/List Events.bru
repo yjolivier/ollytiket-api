@@ -7,7 +7,11 @@ meta {
 get {
   url: {{OLLYTIKET_URL}}/events
   body: none
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{LOGIN_TOKEN}}
 }
 
 docs {

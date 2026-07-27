@@ -4,7 +4,21 @@ import { Manager } from '../managers/manager.entity';
 import { EventEntity } from '../events/entities/event.entity';
 import { Ticket } from '../tickets/entities/ticket.entity';
 
-export const typeOrmConfig = (
+/** Render (and most PaaS providers) expose a single connection string. */
+const databaseUrlConfig = (
+  config: ConfigService,
+): TypeOrmModuleOptions => ({
+  type: 'postgres',
+  url: config.get<string>('DATABASE_URL'),
+  ssl:
+    config.get<string>('DB_SSL', 'true') === 'true'
+      ? { rejectUnauthorized: false }
+      : false,
+  entities: [Manager, EventEntity, Ticket],
+  synchronize: config.get<string>('DB_SYNCHRONIZE', 'true') === 'true',
+});
+
+const discreteFieldsConfig = (
   config: ConfigService,
 ): TypeOrmModuleOptions => ({
   type: 'postgres',
@@ -16,3 +30,8 @@ export const typeOrmConfig = (
   entities: [Manager, EventEntity, Ticket],
   synchronize: config.get<string>('DB_SYNCHRONIZE', 'true') === 'true',
 });
+
+export const typeOrmConfig = (config: ConfigService): TypeOrmModuleOptions =>
+  config.get<string>('DATABASE_URL')
+    ? databaseUrlConfig(config)
+    : discreteFieldsConfig(config);

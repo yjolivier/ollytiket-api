@@ -18,6 +18,10 @@ body:json {
   }
 }
 
+vars:pre-request {
+  OLLYTIKET_EVENT_ID: 2d1a26d8-ae52-4327-840d-cbed6f9f3e08
+}
+
 script:post-response {
   const response = res.getBody();
   if (response.id) {
@@ -30,12 +34,12 @@ script:post-response {
 
 docs {
   Generates a ticket for `phone` in the given `tier` for `eventId`.
-
+  
   `tier` is one of: vvvip, vvip, vip, standard, grand.
-
+  
   Fails with 400 if the phone number has fewer than 8 digits, or if the
   tier is already at capacity for this event ("Catégorie X complète.").
-
+  
   Saves the created ticket's `id` and `code` to `OLLYTIKET_TICKET_ID` /
   `OLLYTIKET_TICKET_CODE` for use by Refund Ticket and Scan Ticket.
 }
