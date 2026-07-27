@@ -1,9 +1,13 @@
 import { IsNotEmpty, IsString, Matches } from 'class-validator';
 
-export class SignupDto {
+export class RegisterDto {
   @IsString()
   @IsNotEmpty()
   phone: string;
+
+  @IsString()
+  @IsNotEmpty()
+  verificationToken: string;
 
   @IsString()
   @IsNotEmpty()

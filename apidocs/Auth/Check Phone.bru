@@ -1,0 +1,26 @@
+meta {
+  name: Check Phone
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{OLLYTIKET_URL}}/auth/check-phone
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "phone": "0747105623"
+  }
+}
+
+docs {
+  Checks whether `phone` is already registered.
+
+  Returns `{ "exists": true, "name": "Awa Koné" }` for a known manager (so the
+  login screen can show a personalized "Bonjour {Prénom}" PIN step), or
+  `{ "exists": false }` for an unknown number (routes to the 3-step signup
+  flow: Send Otp → Verify Otp → Register).
+}

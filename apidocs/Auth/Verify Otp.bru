@@ -1,0 +1,33 @@
+meta {
+  name: Verify Otp
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{OLLYTIKET_URL}}/auth/otp/verify
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "phone": "0747105623",
+    "code": "0000"
+  }
+}
+
+script:post-response {
+  const response = res.getBody();
+  if (response.verificationToken) {
+    bru.setGlobalEnvVar("OLLYTIKET_VERIFICATION_TOKEN", response.verificationToken);
+  }
+}
+
+docs {
+  Verifies the 4-digit code sent to `phone`. The demo code is always `0000`
+  (no WhatsApp/SMS provider wired up yet). Returns 401 on mismatch.
+
+  On success, returns `{ "verificationToken": "..." }` — a short-lived
+  (10 min) token scoped to this phone number, required by Register.
+}

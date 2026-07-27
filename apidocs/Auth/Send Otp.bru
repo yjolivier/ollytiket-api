@@ -1,0 +1,26 @@
+meta {
+  name: Send Otp
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{OLLYTIKET_URL}}/auth/otp/send
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "phone": "0747105623"
+  }
+}
+
+docs {
+  Sends (in a real deployment, over WhatsApp) a 4-digit verification code to
+  `phone`. Fails with 409 if the phone is already registered — use Login
+  instead.
+
+  No WhatsApp/SMS provider is wired up yet, so this is a no-op beyond the
+  existence check: the demo code is always `0000` (see Verify Otp).
+}

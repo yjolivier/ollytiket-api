@@ -1,7 +1,7 @@
 meta {
   name: Login
   type: http
-  seq: 2
+  seq: 5
 }
 
 post {
@@ -12,7 +12,7 @@ post {
 
 body:json {
   {
-    "phone": "0708123456",
+    "phone": "0747105623",
     "pin": "1234"
   }
 }
@@ -28,5 +28,5 @@ docs {
   Logs in an existing manager. Returns 401 on wrong PIN (locks out for 15
   minutes after 5 consecutive failures) or unknown phone number.
 
-  Saves `accessToken` to the `OLLYTIKET_TOKEN` global var, same as Signup.
+  Saves `accessToken` to the `OLLYTIKET_TOKEN` global var, same as Register.
 }

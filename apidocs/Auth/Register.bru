@@ -1,0 +1,39 @@
+meta {
+  name: Register
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{OLLYTIKET_URL}}/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "phone": "0747105623",
+    "verificationToken": "{{OLLYTIKET_VERIFICATION_TOKEN}}",
+    "name": "Awa Koné",
+    "pin": "1234"
+  }
+}
+
+script:post-response {
+  const response = res.getBody();
+  if (response.accessToken) {
+    bru.setGlobalEnvVar("OLLYTIKET_TOKEN", response.accessToken);
+  }
+}
+
+docs {
+  Creates a new manager account. Requires a `verificationToken` from Verify
+  Otp scoped to the same `phone` — fails with 401 if it's missing, expired,
+  or was issued for a different number. Fails with 409 if the phone is
+  already registered (race with a second Register call). `pin` must be
+  exactly 4 digits.
+
+  On success, saves `accessToken` to the `OLLYTIKET_TOKEN` global var so
+  subsequent requests (which use bearer auth inherited from the collection)
+  are authenticated automatically.
+}
