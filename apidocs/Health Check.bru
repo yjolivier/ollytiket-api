@@ -1,0 +1,15 @@
+meta {
+  name: Health Check
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{OLLYTIKET_URL}}/health
+  body: none
+  auth: none
+}
+
+docs {
+  Simple liveness check. Returns `{ status: "ok" }` when the API is up.
+}
