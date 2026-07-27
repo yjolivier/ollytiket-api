@@ -1,0 +1,21 @@
+meta {
+  name: List Tickets
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{OLLYTIKET_URL}}/tickets?eventId={{OLLYTIKET_EVENT_ID}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  eventId: {{OLLYTIKET_EVENT_ID}}
+}
+
+docs {
+  Lists tickets belonging to the authenticated manager's events, newest
+  first. `eventId` is optional — remove/disable the query param to list
+  tickets across all of the manager's events.
+}

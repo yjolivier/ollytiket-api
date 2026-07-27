@@ -1,0 +1,25 @@
+meta {
+  name: Update Event
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{OLLYTIKET_URL}}/events/{{OLLYTIKET_EVENT_ID}}
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "capacity": 2200,
+    "margin": 120
+  }
+}
+
+docs {
+  Partially updates an event owned by the authenticated manager. Any subset
+  of the Create Event fields may be sent. Fails with 400 if the resulting
+  allocated sum exceeds `capacity`, 404 if the event doesn't exist or isn't
+  owned by this manager.
+}

@@ -1,0 +1,29 @@
+meta {
+  name: Scan Ticket
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{OLLYTIKET_URL}}/tickets/scan
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "code": "OLLYTIKET:{{OLLYTIKET_TICKET_CODE}}|EVT:{{OLLYTIKET_EVENT_ID}}"
+  }
+}
+
+docs {
+  Scans a ticket at the entrance, by full QR payload
+  (`OLLYTIKET:<code>|EVT:<eventId>`) or by bare `code`.
+
+  Always returns 200 with `{ success, title, message, ticket? }` — the
+  scan outcome is in the body, not the HTTP status:
+  - `valid` → `scanned` (success: true)
+  - already `scanned` → "Déjà scanné" (success: false)
+  - `refunded` → "Billet remboursé" (success: false)
+  - unknown code → "Billet introuvable" (success: false, no ticket)
+}

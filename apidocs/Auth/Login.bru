@@ -1,0 +1,32 @@
+meta {
+  name: Login
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{OLLYTIKET_URL}}/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "phone": "0708123456",
+    "pin": "1234"
+  }
+}
+
+script:post-response {
+  const response = res.getBody();
+  if (response.accessToken) {
+    bru.setGlobalEnvVar("OLLYTIKET_TOKEN", response.accessToken);
+  }
+}
+
+docs {
+  Logs in an existing manager. Returns 401 on wrong PIN (locks out for 15
+  minutes after 5 consecutive failures) or unknown phone number.
+
+  Saves `accessToken` to the `OLLYTIKET_TOKEN` global var, same as Signup.
+}

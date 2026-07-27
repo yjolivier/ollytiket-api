@@ -1,0 +1,15 @@
+meta {
+  name: List Events
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{OLLYTIKET_URL}}/events
+  body: none
+  auth: inherit
+}
+
+docs {
+  Lists the authenticated manager's events, newest first.
+}

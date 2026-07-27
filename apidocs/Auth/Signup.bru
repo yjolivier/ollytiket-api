@@ -1,0 +1,35 @@
+meta {
+  name: Signup
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{OLLYTIKET_URL}}/auth/signup
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "phone": "0708123456",
+    "name": "Awa",
+    "pin": "1234"
+  }
+}
+
+script:post-response {
+  const response = res.getBody();
+  if (response.accessToken) {
+    bru.setGlobalEnvVar("OLLYTIKET_TOKEN", response.accessToken);
+  }
+}
+
+docs {
+  Creates a new manager account. `pin` must be exactly 4 digits.
+  Fails with 409 if the phone number is already registered — use Login instead.
+
+  On success, saves `accessToken` to the `OLLYTIKET_TOKEN` global var so
+  subsequent requests (which use bearer auth inherited from the collection)
+  are authenticated automatically.
+}

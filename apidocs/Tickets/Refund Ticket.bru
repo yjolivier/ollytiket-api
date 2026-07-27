@@ -1,0 +1,17 @@
+meta {
+  name: Refund Ticket
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{OLLYTIKET_URL}}/tickets/{{OLLYTIKET_TICKET_ID}}/refund
+  body: none
+  auth: inherit
+}
+
+docs {
+  Marks a ticket as refunded (soft delete — it stays listed, but becomes
+  invalid for scanning and frees up its tier's capacity). 404 if the ticket
+  doesn't exist or isn't owned by this manager.
+}
